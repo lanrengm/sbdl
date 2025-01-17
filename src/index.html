@@ -4,25 +4,26 @@
   window-width="20%"
   window-height="60%"
   window-resizable="true"
-  window-icon="../assets/snake_512.ico"
+  window-icon="../assets/yh_64.ico"
 >
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="index.css" />
+    <title>赛博对联</title>
   </head>
   <body>
     <table class="group">
       <tr>
-        <td class="col-1"><label for="hp">横批</label></td>
-        <td class="col-2"><input type="text" name="hp" /></td>
+        <td class="col-1"><label for="top-text">横批</label></td>
+        <td class="col-2"><input type="text" name="top-text" id="top-text" /></td>
       </tr>
       <tr>
-        <td class="col-1"><label for="sl">上联</label></td>
-        <td class="col-2"><input type="text" name="sl" /></td>
+        <td class="col-1"><label for="right-text">上联</label></td>
+        <td class="col-2"><input type="text" name="right-text" id="right-text" /></td>
       </tr>
       <tr>
-        <td class="col-1"><label for="xl">下联</label></td>
-        <td class="col-2"><input type="text" name="xl" /></td>
+        <td class="col-1"><label for="left-text">下联</label></td>
+        <td class="col-2"><input type="text" name="xlleft-text" id="left-text"/></td>
       </tr>
       <tr>
         <td class="col-1"><label for="fgc">前景色</label></td>
@@ -41,7 +42,13 @@
           <button id="hidden">隐藏</button>
         </td>
       </tr>
+      <tr>
+        <td class="col-1"></td>
+        <td class="col-2">
+          <button id="save">保存</button>
+        </td>
+      </tr>
     </table>
   </body>
-  <script src="./main.js"></script>
+  <script src="index.js"></script>
 </html>

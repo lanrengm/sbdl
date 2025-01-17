@@ -1,21 +1,21 @@
+import * as sys from "@sys";
+import { encode, decode } from "@sciter";
 
 const dlPath = 'dl.html';
+const dataPath = 'data.json';
 
 class ChineseCouplet {
-  TopWin = null;
-  RightWin = null;
-  LeftWin = null;
+  topText = "";
+  rightText = "";
+  leftText = "";
 
-  constructor() {
-    // this.createTop();
-    // this.createRight();
-    // this.createLeft();
-    // this.hidden();
-  }
+  topWin = null;
+  rightWin = null;
+  leftWin = null;
 
-  createTop() {
-    if (!this.TopWin) {
-      this.TopWin = new Window({
+  initTopWin() {
+    if (!this.topWin) {
+      this.topWin = new Window({
         type: Window.POPUP_WINDOW,
         caption: "横批",
         url: dlPath,
@@ -24,17 +24,18 @@ class ChineseCouplet {
         // parent: Window.this,
         alignment: 8,
       });
-      this.TopWin.document.$("#main").classList.add("horizontal");
-      this.TopWin.on('closerequest', () => {
+      this.topWin.document.$("#main").classList.add("horizontal");
+      this.topWin.document.$("#main").innerText = this.topText;
+      this.topWin.on('closerequest', () => {
         Window.this.modal(<alert caption="警告">关闭横批</alert>);
-        this.TopWin = null;
+        this.topWin = null;
       });
     }
   }
 
-  createRight() {
-    if (!this.RightWin) {
-      this.RightWin = new Window({
+  initRightWin() {
+    if (!this.rightWin) {
+      this.rightWin = new Window({
         type: Window.POPUP_WINDOW,
         caption: "上联",
         url: dlPath,
@@ -43,17 +44,18 @@ class ChineseCouplet {
         // parent: Window.this,
         alignment: 6,
       });
-      this.RightWin.document.$("#main").classList.add("vertical");
-      this.RightWin.on('closerequest', () => {
+      this.rightWin.document.$("#main").classList.add("vertical");
+      this.rightWin.document.$("#main").innerText = this.rightText;
+      this.rightWin.on('closerequest', () => {
         Window.this.modal(<alert caption="警告">关闭上联</alert>);
-        this.RightWin = null;
+        this.rightWin = null;
       });
     }
   }
 
-  createLeft() {
-    if (!this.LeftWin) {
-      this.LeftWin = new Window({
+  initLeftWin() {
+    if (!this.leftWin) {
+      this.leftWin = new Window({
         type: Window.POPUP_WINDOW,
         caption: "下联",
         url: dlPath,
@@ -62,84 +64,114 @@ class ChineseCouplet {
         // parent: Window.this,
         alignment: 4,
       });
-      this.LeftWin.document.$("#main").classList.add("vertical");
-      this.LeftWin.on('closerequest', () => {
+      this.leftWin.document.$("#main").classList.add("vertical");
+      this.leftWin.document.$("#main").innerText = this.leftText;
+      this.leftWin.on('closerequest', () => {
         Window.this.modal(<alert caption="警告">关闭下联</alert>);
-        this.LeftWin = null;
+        this.leftWin = null;
       });
     }
   }
 
-  show() {
-    if (this.TopWin) {
-      this.TopWin.state = Window.WINDOW_SHOWN;
+  show(data = { topText: "", rightText: "", leftText: "" }) {
+    this.topText = data.topText;
+    this.rightText = data.rightText;
+    this.leftText = data.leftText;
+    if (this.topWin) {
+      this.topWin.state = Window.WINDOW_SHOWN;
+      this.topWin.document.$("#main").innerText = this.topText;
     } else {
-      this.createTop();
+      this.initTopWin();
     }
-    if (this.RightWin) {
-      this.RightWin.state = Window.WINDOW_SHOWN;
+    if (this.rightWin) {
+      this.rightWin.state = Window.WINDOW_SHOWN;
+      this.rightWin.document.$("#main").innerText = this.rightText;
     } else {
-      this.createRight();
+      this.initRightWin();
     }
-    if (this.LeftWin) {
-      this.LeftWin.state = Window.WINDOW_SHOWN;
+    if (this.leftWin) {
+      this.leftWin.state = Window.WINDOW_SHOWN;
+      this.leftWin.document.$("#main").innerText = this.leftText;
     } else {
-      this.createLeft();
+      this.initLeftWin();
     }
   }
 
   hidden() {
-    if (this.TopWin) {
-      this.TopWin.state = Window.WINDOW_HIDDEN;
+    if (this.topWin) {
+      this.topWin.state = Window.WINDOW_HIDDEN;
     }
-    if (this.RightWin) {
-      this.RightWin.state = Window.WINDOW_HIDDEN;
+    if (this.rightWin) {
+      this.rightWin.state = Window.WINDOW_HIDDEN;
     }
-    if (this.LeftWin) {
-      this.LeftWin.state = Window.WINDOW_HIDDEN;
+    if (this.leftWin) {
+      this.leftWin.state = Window.WINDOW_HIDDEN;
     }
   }
 }
 
 const chineseCouplet = new ChineseCouplet();
 document.on('click', 'button#show', function () {
-  chineseCouplet.show();
-  chineseCouplet.TopWin.document.$("#main").innerText = document.$('input#top-text').value;
-  chineseCouplet.RightWin.document.$("#main").innerText = document.$('input#right-text').value;
-  chineseCouplet.LeftWin.document.$("#main").innerText = document.$('input#left-text').value;
+  chineseCouplet.show({
+    topText: document.$('input#top-text').value,
+    rightText: document.$('input#right-text').value,
+    leftText: document.$('input#left-text').value,
+  });
 });
 document.on('click', 'button#hidden', function () {
   chineseCouplet.hidden();
 })
 document.on('change', 'input#top-text', function (evt) {
   // Window.this.modal(<info>{evt.target.value}</info>);;
-  if (chineseCouplet.TopWin) {
-    const el = chineseCouplet.TopWin.document.$('#main');
+  if (chineseCouplet.topWin) {
+    const el = chineseCouplet.topWin.document.$('#main');
     el.innerText = evt.target.value;
   }
 });
 document.on('change', 'input#right-text', function (evt) {
   // Window.this.modal(<info>{evt.target.value}</info>);;
-  if (chineseCouplet.RightWin) {
-    const el = chineseCouplet.RightWin.document.$('#main');
+  if (chineseCouplet.rightWin) {
+    const el = chineseCouplet.rightWin.document.$('#main');
     el.innerText = evt.target.value;
   }
 });
 document.on('change', 'input#left-text', function (evt) {
   // Window.this.modal(<info>{evt.target.value}</info>);;
-  if (chineseCouplet.LeftWin) {
-    const el = chineseCouplet.LeftWin.document.$('#main');
+  if (chineseCouplet.leftWin) {
+    const el = chineseCouplet.leftWin.document.$('#main');
     el.innerText = evt.target.value;
   }
 });
 document.on('click', 'button#save', async function () {
   const config = {
-    topText: chineseCouplet.TopWin.document.$('#main').innerText,
-    rightText: chineseCouplet.RightWin.document.$('#main').innerText,
-    leftText: chineseCouplet.LeftWin.document.$('#main').innerText,
+    topText: document.$('input#top-text').value,
+    rightText: document.$('input#right-text').value,
+    leftText: document.$('input#left-text').value,
   };
-  const json = JSON.stringify(config);
-  const file = await sys.fs.open('config.json', "w+");
+  const json = JSON.stringify(config, null, 2);
+  const file = await sys.fs.open(dataPath, "w+", 0o666);
   await file.write(json);
-  file.close();
+  await file.close();
+  document.$('#result').innerText = `保存数据成功!`;
+});
+document.on('ready', async function () {
+  const file = await sys.fs.open(dataPath, "r", 0o666);
+  const data = JSON.parse(decode(await file.read(), "utf8"));
+  await file.close();
+  document.$('input#top-text').value = data.topText;
+  document.$('input#right-text').value = data.rightText;
+  document.$('input#left-text').value = data.leftText;
+  chineseCouplet.show({
+    topText: data.topText,
+    rightText: data.rightText,
+    leftText: data.leftText,
+  });
+  document.$('#result').appendChild(document.createTextNode('数据加载成功!'));
+  
+});
+
+document.on('change', 'input#top-margin', function (evt) {
+  document.$('#result').innerText = `顶部距离: ${evt.target.value}`;
+  const [x, y] = chineseCouplet.topWin.box("position", "client", "monitor")
+  chineseCouplet.topWin.move(x, evt.target.value);
 });

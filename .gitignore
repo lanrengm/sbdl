@@ -2,4 +2,5 @@ node_modules
 bin
 dist
 
+data.json
 yarn.lock

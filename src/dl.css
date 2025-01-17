@@ -18,13 +18,13 @@ body {
 }
 
 #main.horizontal {
-  background-color: #fff;
+  /* background-color: #fff; */
   white-space: nowrap; /* 强制不换行 */
 
 }
 
 #main.vertical {
-  background-color: #fff;
+  /* background-color: #fff; */
   writing-mode: vertical-rl; /* 竖直从右往左书写 */
   text-orientation: upright; /* 竖直方向 */
 }

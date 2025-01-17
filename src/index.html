@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html
   lang="zh-CN"
-  window-width="20%"
+  window-width="40%"
   window-height="60%"
   window-resizable="true"
   window-icon="../assets/yh_64.ico"
@@ -14,16 +14,59 @@
   <body>
     <table class="group">
       <tr>
+        <td class="col-1"></td>
+        <td class="col-2">
+        </td>
+        <td class="col-3">
+          <button id="save">保存全部设置</button>
+        </td>
+      </tr>
+      <tr>
         <td class="col-1"><label for="top-text">横批</label></td>
         <td class="col-2"><input type="text" name="top-text" id="top-text" /></td>
+        <td class="col-3">
+          <button>显示</button>
+          <button>隐藏</button>
+        </td>
       </tr>
       <tr>
         <td class="col-1"><label for="right-text">上联</label></td>
         <td class="col-2"><input type="text" name="right-text" id="right-text" /></td>
+        <td class="col-3">
+          <button>显示</button>
+          <button>隐藏</button>
+        </td>
       </tr>
       <tr>
         <td class="col-1"><label for="left-text">下联</label></td>
         <td class="col-2"><input type="text" name="xlleft-text" id="left-text"/></td>
+        <td class="col-3">
+          <button>显示</button>
+          <button>隐藏</button>
+        </td>
+      </tr>
+      <tr>
+        <td class="col-1"></td>
+        <td class="col-2">
+        <td class="col-3">
+          <button id="show">显示</button>
+          <button id="hidden">隐藏</button>
+        </td>
+      </tr>
+      <tr>
+        <td class="col-1"><label for="">上边距</label></td>
+        <td class="col-2"><input type="hslider" min="0" max="1000" value="0" step="1" id="top-margin" buddy="top-margin-value" /></td>
+        <td class="col-3"><input type="text" id="top-margin-value"></td>
+      </tr>
+      <tr>
+        <td class="col-1"><label for="">宽度</label></td>
+        <td class="col-2"><input type="hslider" min="0" max="1000" value="0" step="1"  /></td>
+        <td class="col-3"><input type="text" ></td>
+      </tr>
+      <tr>
+        <td class="col-1"><label for="">高度</label></td>
+        <td class="col-2"><input type="hslider" min="0" max="1000" value="0" step="1"  /></td>
+        <td class="col-3"><input type="text" ></td>
       </tr>
       <tr>
         <td class="col-1"><label for="fgc">前景色</label></td>
@@ -35,20 +78,11 @@
         <td class="col-1"><label for="bgc">背景色</label></td>
         <td class="col-2"><input type="color" value="red" name="bgc" /></td>
       </tr>
-      <tr>
-        <td class="col-1"></td>
-        <td class="col-2">
-          <button id="show">显示</button>
-          <button id="hidden">隐藏</button>
-        </td>
-      </tr>
-      <tr>
-        <td class="col-1"></td>
-        <td class="col-2">
-          <button id="save">保存</button>
-        </td>
-      </tr>
     </table>
+    <div class="group">
+      <h2>日志：</h2>
+      <p id="result"></p>
+    </div>
   </body>
-  <script src="index.js"></script>
+  <script src="index.js" type="module"></script>
 </html>

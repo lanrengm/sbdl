@@ -1,0 +1,28 @@
+:root {
+  --bgc: #e2e2e2;
+}
+.group {
+  background-color: var(--bgc);
+  border-radius: 1em;
+  padding: 1em;
+  margin: 0.5em;
+  word-break: break-all;
+}
+.group table {
+  border-collapse: collapse;
+  border: 0 solid white;
+}
+.group td {
+  border: 5px solid var(--bgc);
+  /* border: 5px solid white; */
+}
+.group .col-1 {
+  width: 20%;
+  text-align: right;
+}
+.group .col-2 {
+  width: 80%;
+}
+.group input {
+  width: 100%;
+}

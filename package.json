@@ -1,0 +1,15 @@
+{
+  "name": "sbdl",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon -e js,html,css ./config.mjs",
+    "dev2": "./bin/win/usciter.exe",
+    "d:usciter": "curl https://gitlab.com/sciter-engine/sciter-js-sdk/-/raw/main/bin/windows/x64/usciter.exe?ref_type=heads&inline=false -o ./bin/win/usciter.exe",
+    "d:scapp": "curl https://gitlab.com/sciter-engine/sciter-js-sdk/-/raw/main/bin/windows/x64/scapp.exe?ref_type=heads&inline=false -o ./dist/win/scapp.exe"
+  },
+  "dependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

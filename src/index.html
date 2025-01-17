@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html
+  lang="zh-CN"
+  window-width="20%"
+  window-height="60%"
+  window-resizable="true"
+  window-icon="../assets/snake_512.ico"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <table class="group">
+      <tr>
+        <td class="col-1"><label for="hp">横批</label></td>
+        <td class="col-2"><input type="text" name="hp" /></td>
+      </tr>
+      <tr>
+        <td class="col-1"><label for="sl">上联</label></td>
+        <td class="col-2"><input type="text" name="sl" /></td>
+      </tr>
+      <tr>
+        <td class="col-1"><label for="xl">下联</label></td>
+        <td class="col-2"><input type="text" name="xl" /></td>
+      </tr>
+      <tr>
+        <td class="col-1"><label for="fgc">前景色</label></td>
+        <td class="col-2">
+          <input type="color" value="black" name="fgc" id="" />
+        </td>
+      </tr>
+      <tr>
+        <td class="col-1"><label for="bgc">背景色</label></td>
+        <td class="col-2"><input type="color" value="red" name="bgc" /></td>
+      </tr>
+      <tr>
+        <td class="col-1"></td>
+        <td class="col-2">
+          <button id="show">显示</button>
+          <button id="hidden">隐藏</button>
+        </td>
+      </tr>
+    </table>
+  </body>
+  <script src="./main.js"></script>
+</html>

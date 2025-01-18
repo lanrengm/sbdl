@@ -111,16 +111,8 @@ class ChineseCouplet {
 }
 
 const chineseCouplet = new ChineseCouplet();
-document.on('click', 'button#show', function () {
-  chineseCouplet.show({
-    topText: document.$('input#top-text').value,
-    rightText: document.$('input#right-text').value,
-    leftText: document.$('input#left-text').value,
-  });
-});
-document.on('click', 'button#hidden', function () {
-  chineseCouplet.hidden();
-})
+
+
 document.on('change', 'input#top-text', function (evt) {
   // Window.this.modal(<info>{evt.target.value}</info>);;
   if (chineseCouplet.topWin) {
@@ -154,6 +146,60 @@ document.on('click', 'button#save', async function () {
   await file.close();
   document.$('#result').innerText = `保存数据成功!`;
 });
+
+document.on('change', 'input#top-margin', function (evt) {
+  document.$('#result').innerText = `顶部距离: ${evt.target.value}`;
+  const [x, y] = chineseCouplet.topWin.box("position", "client", "monitor")
+  chineseCouplet.topWin.move(x, evt.target.value);
+});
+
+function MainGroup(chineseCouplet) {
+  function show() {
+    chineseCouplet.show({
+      topText: document.$('input#top-text').value,
+      rightText: document.$('input#right-text').value,
+      leftText: document.$('input#left-text').value,
+    });
+  }
+  return (
+    <>
+      <summary>整体设置</summary>
+      <hr></hr>
+      <table >
+        <tr>
+          <td class="col-1">横批</td>
+          <td class="col-2">
+            <button onclick={() => chineseCouplet.topWin.state = Window.WINDOW_SHOWN}>显示</button>
+            <button onclick={() => chineseCouplet.topWin.state = Window.WINDOW_HIDDEN}>隐藏</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-1">上联</td>
+          <td class="col-2">
+            <button onclick={() => chineseCouplet.rightWin.state = Window.WINDOW_SHOWN}>显示</button>
+            <button onclick={() => chineseCouplet.rightWin.state = Window.WINDOW_HIDDEN}>隐藏</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-1">下联</td>
+          <td class="col-2">
+            <button onclick={() => chineseCouplet.leftWin.state = Window.WINDOW_SHOWN}>显示</button>
+            <button onclick={() => chineseCouplet.leftWin.state = Window.WINDOW_HIDDEN}>隐藏</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="col-1"></td>
+          <td class="col-2">
+            <button onclick={show}>显示全部</button>
+            <button onclick={chineseCouplet.hidden.bind(chineseCouplet)}>隐藏全部</button>
+          </td>
+        </tr >
+      </table>
+    </>
+  );
+}
+
+
 document.on('ready', async function () {
   const file = await sys.fs.open(dataPath, "r", 0o666);
   const data = JSON.parse(decode(await file.read(), "utf8"));
@@ -167,11 +213,5 @@ document.on('ready', async function () {
     leftText: data.leftText,
   });
   document.$('#result').appendChild(document.createTextNode('数据加载成功!'));
-  
-});
-
-document.on('change', 'input#top-margin', function (evt) {
-  document.$('#result').innerText = `顶部距离: ${evt.target.value}`;
-  const [x, y] = chineseCouplet.topWin.box("position", "client", "monitor")
-  chineseCouplet.topWin.move(x, evt.target.value);
+  document.$('#main-group').content(MainGroup(chineseCouplet));
 });

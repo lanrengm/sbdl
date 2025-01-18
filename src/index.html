@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html
   lang="zh-CN"
-  window-x="60%"
-  window-width="20%"
-  window-height="90%"
+  window-width="25%"
+  window-height="70%"
   window-resizable="true"
-  window-alignment="9"
+  window-alignment="2"
   window-icon="../assets/yh_64.ico"
 >
   <head>
@@ -14,64 +13,13 @@
     <title>赛博对联</title>
   </head>
   <body>
-    <details open class="group" id="main-group"></details>
-    <table class="group">
-      <tr>
-        <td class="col-1"><label for="top-text">横批</label></td>
-        <td class="col-2">
-          <input type="text" name="top-text" id="top-text" />
-        </td>
-      </tr>
-      <tr>
-        <td class="col-1"><label for="right-text">上联</label></td>
-        <td class="col-2">
-          <input type="text" name="right-text" id="right-text" />
-        </td>
-      </tr>
+    <div id="root"></div>
+    <table>
       <tr>
         <td class="col-1"><label for="left-text">下联</label></td>
         <td class="col-2">
           <input type="text" name="xlleft-text" id="left-text" />
         </td>
-      </tr>
-      <tr>
-        <td class="col-1"><label for="">上边距</label></td>
-        <td class="col-2">
-          <input
-            type="hslider"
-            min="0"
-            max="1000"
-            value="0"
-            step="1"
-            id="top-margin"
-            buddy="top-margin-value"
-          />
-        </td>
-        <td class="col-3"><input type="text" id="top-margin-value" /></td>
-      </tr>
-      <tr>
-        <td class="col-1"><label for="">宽度</label></td>
-        <td class="col-2">
-          <input type="hslider" min="0" max="1000" value="0" step="1" />
-        </td>
-        <td class="col-3"><input type="text" /></td>
-      </tr>
-      <tr>
-        <td class="col-1"><label for="">高度</label></td>
-        <td class="col-2">
-          <input type="hslider" min="0" max="1000" value="0" step="1" />
-        </td>
-        <td class="col-3"><input type="text" /></td>
-      </tr>
-      <tr>
-        <td class="col-1"><label for="fgc">前景色</label></td>
-        <td class="col-2">
-          <input type="color" value="black" name="fgc" id="" />
-        </td>
-      </tr>
-      <tr>
-        <td class="col-1"><label for="bgc">背景色</label></td>
-        <td class="col-2"><input type="color" value="red" name="bgc" /></td>
       </tr>
     </table>
     <table class="group">
@@ -87,5 +35,5 @@
       <p id="result"></p>
     </div>
   </body>
-  <script src="index.js" type="module"></script>
+  <script src="index.jsx" type="module"></script>
 </html>

@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon -e js,html,css ./config.mjs",
+    "dev": "nodemon -e js,jsx,html,css ./config.mjs",
     "dev2": "./bin/win/usciter.exe",
     "d:usciter": "iwr -uri https://gitlab.com/sciter-engine/sciter-js-sdk/-/raw/main/bin/windows/x64/usciter.exe -outfile usciter.exe",
     "d:scapp": "curl https://gitlab.com/sciter-engine/sciter-js-sdk/-/raw/main/bin/windows/x64/scapp.exe --output scapp.exe"

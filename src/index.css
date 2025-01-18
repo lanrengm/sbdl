@@ -28,15 +28,18 @@ body {
 }
 .group .col-2 {
   width: 6rem;
-  text-align: left;
 }
-.group .col-3 {
+.group .col-end {
   width: 100%;
 }
 .group .right {
   text-align: right;
 }
 
-.group input {
+.group input[type="text"],
+.group input[type="number"],
+.group input[type="hslider"],
+.group fieldset {
   width: 100%;
 }
+

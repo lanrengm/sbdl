@@ -1,7 +1,7 @@
 import * as sys from "@sys";
 import { encode, decode } from "@sciter";
 
-import { Group } from "./cpts.jsx";
+import { Foo } from "./cpts.jsx";
 
 const dlPath = 'dl.html';
 const dataPath = 'data.json';
@@ -324,7 +324,7 @@ function RightGroup({ chineseCouplet: chineseCouplet }) {
 document.on('ready', async function () {
   const chineseCouplet = new ChineseCouplet();
   try {
-    document.$('#root').append(<Group title="横批" />);
+    document.$('#root').append(<Foo title="横批" content="恭喜发财" />);
   } catch (e) {
     Window.this.modal(<alert caption="报错">{e}</alert>);
   }

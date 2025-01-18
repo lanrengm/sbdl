@@ -1,69 +1,116 @@
 /**
  * 一个分组
  */
-export class Group extends Element {
+export class Foo extends Element {
   screenW = Reactor.signal(1024);
   screenH = Reactor.signal(768);
+
   win = null;
   winY = Reactor.signal(0);
   winW = Reactor.signal(0);
   winH = Reactor.signal(0);
 
   title = Reactor.signal("");
-  text = Reactor.signal("");
+  content = Reactor.signal("");
 
 
-  this({ title = '新窗口' }) {
+  this({ title = '福', content = '恭喜发财' }) {
+    // 初始化屏幕相关数据
     const [screenW, screenH] = Window.this.screenBox("frame", "dimension");
     this.screenW.value = screenW;
     this.screenH.value = screenH;
-    this.win = new Window({
-      type: Window.POPUP_WINDOW,
-      caption: "横批",
-      url: './dl.html',
-      width: 400,
-      height: 100,
-      // parent: Window.this,
-      alignment: 8,
+    // 初始化窗口相关数据
+    this.createWin();
+    Reactor.effect(() => {
+      const v= this.title.value;
+      if (this.win) {
+        this.win.caption = v;
+      }
     });
-    this.win.document.$("#main").classList.add("horizontal");
-    this.win.document.$("#main").innerText = this.topText;
-    this.win.on("closerequest", () => {
-      Window.this.modal(<alert caption="警告">关闭横批</alert>);
-      this.win = null;
+    Reactor.effect(() => {
+      const v = this.content.value;
+      if (this.win) {
+        this.win.document.$("#main").innerText = v;
+      }
     });
     const [winX, winY, winW, winH] = this.win.box("xywh", "client", "monitor");
     this.winY.value = winY;
     this.winW.value = winW;
     this.winH.value = winH;
-    
+    this.win.on("closerequest", () => {
+      // Window.this.modal(<alert caption="警告">关闭{this.title}</alert>);
+      this.win = null;
+    });
+    // 初始化标题和内容
     this.title.value = title;
+    this.content.value = content;
 
+    // 响应窗口变化
     Reactor.effect(() => {
       const stateY = this.winY.value;
       const stateW = this.winW.value;
       const stateH = this.winH.value;
-
       const newX = (this.screenW.value - stateW) / 2;
-
-      this.win.move(newX, stateY, stateW, stateH);
-      // Window.this.modal(<info>xx</info>);
+      if (this.win) {
+        this.win.move(newX, stateY, stateW, stateH);
+      }
     });
+  }
+
+  /**
+   * 初始化窗口，或者当窗口被意外关闭后重新创建窗口。
+   */
+  createWin() {
+    if (!this.win) {
+      this.win = new Window({
+        type: Window.POPUP_WINDOW,
+        caption: this.title.value,
+        url: './dl.html',
+        width: 400,
+        height: 100,
+        // parent: Window.this,
+        alignment: 8,
+      });
+      this.win.document.$("#main").classList.add("horizontal");
+      this.win.document.$("#main").innerText = this.content.value;
+    }
+  }
+
+  showWin() {
+    if (this.win) {
+      this.win.state = Window.WINDOW_SHOWN;
+    } else {
+      this.createWin();
+    }
+  }
+
+  hiddenWin() {
+    if (this.win) {
+      this.win.state = Window.WINDOW_HIDDEN;
+    }
   }
 
   render() {
     return (
       <div class="group">
         <details open>
-          <summary>分组</summary>
+          <summary>{this.title}</summary>
           <hr></hr>
           <table>
+            <tr>
+              <td class="col-1">
+                <label for="title-text">分组标题</label>{" "}
+              </td>
+              <td class="" colspan="2">
+                <input type="text" name="title-text" state-value={this.title} />
+              </td>
+            </tr>
             <tr>
               <td class="col-1">
                 <label for="top-text">内容</label>{" "}
               </td>
               <td class="" colspan="2">
-                <input type="text" name="top-text" id="top-text" />
+                <input type="text" name="top-text" state-value={this.content} />
               </td>
             </tr>
             <tr>
@@ -122,8 +169,8 @@ export class Group extends Element {
             <td class="col-1"></td>
             <td class="col-2"></td>
             <td class="col-3 right">
-              <button onclick={() => (this.win.state = Window.WINDOW_SHOWN)}>显示</button>
-              <button onclick={() => (this.win.state = Window.WINDOW_HIDDEN)}>隐藏</button>
+              <button onclick={this.showWin.bind(this)}>显示</button>
+              <button onclick={this.hiddenWin.bind(this)}>隐藏</button>
             </td>
           </tr>
         </table>

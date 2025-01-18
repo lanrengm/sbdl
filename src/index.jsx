@@ -1,12 +1,11 @@
 import * as sys from "@sys";
 import { encode, decode } from "@sciter";
 
-import { Top, Right } from "./cpts.jsx";
+import { Foo } from "./cpts.jsx";
 
-const dataPath = 'data.json';
+const dataPath = "data.json";
 
-
-document.on('click', 'button#save', async function () {
+document.on("click", "button#save", async function () {
   // const config = {
   //   topText: document.$('input#top-text').value,
   //   rightText: document.$('input#right-text').value,
@@ -19,11 +18,12 @@ document.on('click', 'button#save', async function () {
   Window.this.modal(<alert caption="保存成功">配置文件已保存到 {dataPath}</alert>);
 });
 
-
-document.on('ready', async function () {
+document.on("ready", async function () {
   try {
-    document.$('#root').append(<Top title="横批" content="恭喜发财" />);
-    document.$('#root').append(<Right title="上联" content="福临宝地千秋盛" />);
+    document.$("#root").append(<Foo title="横批" content="恭喜发财" direction="horizontal" ww={200} wh={50} wx={0} wy={-490} />);
+    document.$("#root").append(<Foo title="上联" content="福临宝地千秋盛" direction="vertical" ww={56} wh={202} wx={904} wy={0} />);
+    document.$("#root").append(<Foo title="下联" content="财进家门万事兴" direction="vertical" ww={56} wh={202} wx={-904} wy={0} />);
+    document.$("#root").append(<Foo title="福到了" content="福" direction="horizontal" ww={100} wh={100} wx={0} wy={0} />);
   } catch (e) {
     Window.this.modal(<alert caption="报错">{e}</alert>);
   }

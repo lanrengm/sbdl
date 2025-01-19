@@ -15,68 +15,91 @@ export class Foo extends Element {
   content = Reactor.signal("");
   direction = Reactor.signal("horizontal");
 
-  this({ title = "福", content = "福", ww = 50, wh = 50, wx = 0, wy = 0, direction = "horizontal" }) {
-    // 初始化屏幕相关数据
-    const [screenW, screenH] = Window.this.screenBox("frame", "dimension");
-    this.Ow.value = screenW / 2;
-    this.Oh.value = screenH / 2;
-    // 初始化窗口相关数据
-    this.Wx.value = wx;
-    this.Wy.value = wy;
-    this.Ww.value = ww;
-    this.Wh.value = wh;
-    this.direction.value = direction;
-    this.title.value = title;
-    this.content.value = content;
-    this.createWin();
-    // 初始化标题和内容
-    Reactor.effect(() => {
-      const v = this.title.value;
-      if (this.win) this.win.caption = v;
-    });
-    Reactor.effect(() => {
-      const v = this.content.value;
-      if (this.win) this.win.document.$("#main").innerText = v;
-    });
+  isShow = false;
 
-
-    // 响应窗口变化
-    Reactor.effect(() => {
-      const stateX = this.Wx.value;
-      const stateY = this.Wy.value;
-
-      const stateW = this.Ww.value;
-      const stateH = this.Wh.value;
-
-      const newX = stateX + this.Ow.value - stateW;
-      const newY = stateY + this.Oh.value - stateH;
-      const newW = stateW * 2;
-      const newH = stateH * 2;
-
-      if (this.win) {
-        this.win.move(newX, newY, newW, newH);
+  this({
+    title = "福",
+    content = "福",
+    ww = 50,
+    wh = 50,
+    wx = 0,
+    wy = 0,
+    direction = "horizontal",
+    isShow = false,
+  }) {
+    if (this.win) {
+      // 组件刷新时执行
+      this.isShow = isShow;
+      // Window.this.modal(<info>{this.isShow} {typeof this.isShow}</info>);
+      if (this.isShow) {
+        this.showWin();
+      } else {
+        this.hiddenWin();
       }
-    });
-    // 改宽高，变边距
-    Reactor.effect(() => {
-      const stateW = this.Ww.value;
-      const stateH = this.Wh.value;
-      // 宽变
+    } else {
+      // 初始化屏幕相关数据
+      const [screenW, screenH] = Window.this.screenBox("frame", "dimension");
+      this.Ow.value = screenW / 2;
+      this.Oh.value = screenH / 2;
+      // 初始化窗口相关数据
+      this.Wx.value = wx;
+      this.Wy.value = wy;
+      this.Ww.value = ww;
+      this.Wh.value = wh;
+      this.direction.value = direction;
+      this.title.value = title;
+      this.content.value = content;
+      this.isShow = isShow;
+      this.createWin();
+      // 初始化标题和内容
+      Reactor.effect(() => {
+        const v = this.title.value;
+        if (this.win) this.win.caption = v;
+      });
+      Reactor.effect(() => {
+        const v = this.content.value;
+        if (this.win) this.win.document.$("#main").innerText = v;
+      });
 
-    });
-    Reactor.effect(() => {
-      const v = this.direction.value;
-      if (this.win) {
-        this.win.document.$("#main").classList.remove("horizontal", "vertical");
-        this.win.document.$("#main").classList.add(v);
-      }
-    });
-    Reactor.effect(() => {
-      const winH = this.Wh.value;
-      if (this.Wy.value + winH > this.Oh.value) {
-        this.Wy.value = this.Oh.value - winH;
-      }
-    });
+      // 响应窗口变化
+      Reactor.effect(() => {
+        const stateX = this.Wx.value;
+        const stateY = this.Wy.value;
+
+        const stateW = this.Ww.value;
+        const stateH = this.Wh.value;
+
+        const newX = stateX + this.Ow.value - stateW;
+        const newY = stateY + this.Oh.value - stateH;
+        const newW = stateW * 2;
+        const newH = stateH * 2;
+
+        if (this.win) {
+          this.win.move(newX, newY, newW, newH);
+        }
+      });
+      // 改宽高，变边距
+      Reactor.effect(() => {
+        const stateW = this.Ww.value;
+        const stateH = this.Wh.value;
+        // 宽变
+      });
+      Reactor.effect(() => {
+        const v = this.direction.value;
+        if (this.win) {
+          this.win.document
+            .$("#main")
+            .classList.remove("horizontal", "vertical");
+          this.win.document.$("#main").classList.add(v);
+        }
+      });
+      Reactor.effect(() => {
+        const winH = this.Wh.value;
+        if (this.Wy.value + winH > this.Oh.value) {
+          this.Wy.value = this.Oh.value - winH;
+        }
+      });
+    }
   }
 
   /**
@@ -93,6 +116,7 @@ export class Foo extends Element {
         x: this.Wx.value + this.Ow.value,
         y: this.Wy.value + this.Oh.value,
         // parent: Window.this,
+        state: this.isShow ? Window.WINDOW_SHOWN : Window.WINDOW_HIDDEN,
       });
       this.win.document.$("#main").classList.add(this.direction.value);
       this.win.document.$("#main").innerText = this.content.value;
@@ -200,10 +224,23 @@ export class Foo extends Element {
                 <label for="width">宽度</label>
               </td>
               <td class="col-2">
-                <input name="width" type="number" min="0" max={String(this.Ow)} step="1" state-value={this.Ww} />
+                <input
+                  name="width"
+                  type="number"
+                  min="0"
+                  max={String(this.Ow)}
+                  step="1"
+                  state-value={this.Ww}
+                />
               </td>
               <td class="col-end">
-                <input type="hslider" min="0" max={String(this.Ow)} step="1" state-value={this.Ww} />
+                <input
+                  type="hslider"
+                  min="0"
+                  max={String(this.Ow)}
+                  step="1"
+                  state-value={this.Ww}
+                />
               </td>
             </tr>
             <tr>
@@ -211,10 +248,23 @@ export class Foo extends Element {
                 <label for="height">高度</label>
               </td>
               <td class="col-2">
-                <input name="height" type="number" min="0" max={String(this.Oh)} step="1" state-value={this.Wh} />
+                <input
+                  name="height"
+                  type="number"
+                  min="0"
+                  max={String(this.Oh)}
+                  step="1"
+                  state-value={this.Wh}
+                />
               </td>
               <td class="col-end">
-                <input type="hslider" min="0" max={String(this.Oh)} step="1" state-value={this.Wh} />
+                <input
+                  type="hslider"
+                  min="0"
+                  max={String(this.Oh)}
+                  step="1"
+                  state-value={this.Wh}
+                />
               </td>
             </tr>
             <tr>
@@ -222,10 +272,26 @@ export class Foo extends Element {
                 <label for="top-margin">横坐标</label>
               </td>
               <td class="col-2">
-                <input name="top-margin" type="number" min={String(-(this.Ow - this.Ww))} max={String(this.Ow - this.Ww)} value="0" step="1" state-value={this.Wx} />
+                <input
+                  name="top-margin"
+                  type="number"
+                  min={String(-(this.Ow - this.Ww))}
+                  max={String(this.Ow - this.Ww)}
+                  value="0"
+                  step="1"
+                  state-value={this.Wx}
+                />
               </td>
               <td class="col-end">
-                <input type="hslider" min={String(-(this.Ow - this.Ww))} max={String(this.Ow - this.Ww)} value="0" step="1" name="top-margin" state-value={this.Wx} />
+                <input
+                  type="hslider"
+                  min={String(-(this.Ow - this.Ww))}
+                  max={String(this.Ow - this.Ww)}
+                  value="0"
+                  step="1"
+                  name="top-margin"
+                  state-value={this.Wx}
+                />
               </td>
             </tr>
             <tr>
@@ -233,10 +299,26 @@ export class Foo extends Element {
                 <label for="right-margin">纵坐标</label>
               </td>
               <td class="col-2">
-                <input name="right-margin" type="number" min={String(-(this.Oh - this.Wh))} max={String(this.Oh - this.Wh)} value="0" step="1" state-value={this.Wy} />
+                <input
+                  name="right-margin"
+                  type="number"
+                  min={String(-(this.Oh - this.Wh))}
+                  max={String(this.Oh - this.Wh)}
+                  value="0"
+                  step="1"
+                  state-value={this.Wy}
+                />
               </td>
               <td class="col-end">
-                <input type="hslider" min={String(-(this.Oh - this.Wh))} max={String(this.Oh - this.Wh)} value="0" step="1" name="top-margin" state-value={this.Wy} />
+                <input
+                  type="hslider"
+                  min={String(-(this.Oh - this.Wh))}
+                  max={String(this.Oh - this.Wh)}
+                  value="0"
+                  step="1"
+                  name="top-margin"
+                  state-value={this.Wy}
+                />
               </td>
             </tr>
           </table>

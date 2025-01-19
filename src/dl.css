@@ -4,25 +4,32 @@
   box-sizing: border-box;
 }
 
+/* 透明窗口 */
+html,
 body {
-  color: black;
-  background-color: red;
+  background-color: transparent;
+}
+
+#wrapper {
+  height: 100vh;
   overflow: hidden; /* 隐藏超出的内容 */
+  color: gold;
+
+  transform: rotate(45deg);
 }
 
 #main {
-  display: block;
   margin: 0.5*;
-  font-size: 38px;
+  background-color: red;
   font-family: 'Courier New', Courier, monospace;
+  
+  transform: rotate(135deg);
 }
-
 #main.horizontal {
   /* background-color: #fff; */
   white-space: nowrap; /* 强制不换行 */
 
 }
-
 #main.vertical {
   /* background-color: #fff; */
   writing-mode: vertical-rl; /* 竖直从右往左书写 */

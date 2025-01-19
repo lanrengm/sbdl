@@ -9,7 +9,7 @@ document.on("ready", async function () {
   // 设置控制台窗口初始位置
   const [screenW, screenH] = Window.this.screenBox("frame", "dimension");
   const [x, y] = Window.this.box("position", "client", "monitor");
-  Window.this.move(screenW * 0.65, screenH * 0.15);
+  Window.this.move(screenW * 0.65, screenH * 0.05);
   Window.this.state = Window.WINDOW_SHOWN;
   try {
     document.body.append(<App />);
@@ -44,15 +44,16 @@ class App extends Element {
           handleShow={this.handleShow.bind(this)}
           handleHide={this.handleHide.bind(this)}
         />
-        <Foo
+        {/* <Foo
           title="横批"
           content="恭喜发财"
           direction="horizontal"
           ww={200}
           wh={50}
           wx={0}
-          wy={-490}
+          wy={-450}
           isShow={this.isShow.value}
+          isOpen={true}
         />
         <Foo
           title="上联"
@@ -73,16 +74,24 @@ class App extends Element {
           wx={-904}
           wy={0}
           isShow={this.isShow.value}
-        />
+        /> */}
         <Foo
           title="福到了"
           content="福"
           direction="horizontal"
-          ww={100}
-          wh={100}
+          ww={250}
+          wh={250}
           wx={0}
           wy={0}
           isShow={this.isShow.value}
+          isOpen={true}
+          fColor="gold"
+          bColor="red"
+          fontSize={306}
+          frameType="transparent"
+          frontTransform="rotate(45deg) translate(-5,10)"
+          backTransform="rotate(135deg) scale(0.7)"
+          fontFamily="Ma Shan Zheng"
         />
       </div>
     );

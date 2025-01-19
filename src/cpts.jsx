@@ -1,3 +1,13 @@
+import { ColorInput } from "sciter:color-selector.js";
+
+class ColorTest extends ColorInput {
+  constructor(props) {
+    super(props);
+    this.colors = ["white", "silver", "gray"];
+    this.color = "black";
+  }
+}
+
 /**
  * 一个分组
  */
@@ -15,7 +25,21 @@ export class Foo extends Element {
   content = Reactor.signal("");
   direction = Reactor.signal("horizontal");
 
+  /** 显示窗口 */
   isShow = false;
+  /** 窗口背景透明 */
+  frameType = Reactor.signal("extended");
+  /** 展开 */
+  isOpen = false;
+
+  fColor = Reactor.signal("#000000");
+  bColor = Reactor.signal("#FFFFFF");
+  fontSize = Reactor.signal(49);
+  fontStyle = Reactor.signal("normal");
+  fontFamily = Reactor.signal("Arial");
+
+  frontTransform = Reactor.signal("");
+  backTransform = Reactor.signal("");
 
   this({
     title = "福",
@@ -26,6 +50,14 @@ export class Foo extends Element {
     wy = 0,
     direction = "horizontal",
     isShow = false,
+    isOpen = false,
+    frameType = "extended",
+    fcolor = "gold",
+    bcolor = "red",
+    fontSize = 49,
+    fontFamily = "Arial",
+    frontTransform = "",
+    backTransform = "",
   }) {
     if (this.win) {
       // 组件刷新时执行
@@ -50,6 +82,14 @@ export class Foo extends Element {
       this.title.value = title;
       this.content.value = content;
       this.isShow = isShow;
+      this.frameType.value = frameType;
+      this.isOpen = isOpen;
+      this.fColor.value = fcolor;
+      this.bColor.value = bcolor;
+      this.fontSize.value = fontSize;
+      this.fontFamily.value = fontFamily;
+      this.frontTransform.value = frontTransform;
+      this.backTransform.value = backTransform;
       this.createWin();
       // 初始化标题和内容
       Reactor.effect(() => {
@@ -78,6 +118,13 @@ export class Foo extends Element {
           this.win.move(newX, newY, newW, newH);
         }
       });
+      // 响应窗口背景
+      Reactor.effect(() => {
+        const v = this.frameType.value;
+        if (this.win) {
+          this.win.frameType = v;
+        }
+      });
       // 改宽高，变边距
       Reactor.effect(() => {
         const stateW = this.Ww.value;
@@ -99,6 +146,63 @@ export class Foo extends Element {
           this.Wy.value = this.Oh.value - winH;
         }
       });
+      // 响应颜色变化
+      Reactor.effect(() => {
+        const v = this.fColor.value;
+        if (this.win) {
+          this.win.document.$("#main").style.color = v;
+        }
+      });
+      Reactor.effect(() => {
+        const v = this.bColor.value;
+        if (this.win) {
+          this.win.document.$("#wrapper").style.backgroundColor = v;
+        }
+      });
+      // 响应字体大小变化
+      Reactor.effect(() => {
+        const v = this.fontSize.value;
+        if (this.win) {
+          this.win.document.$("#main").style.fontSize = `${v}px`;
+        }
+      });
+      // 响应字体变化
+      Reactor.effect(() => {
+        const v = this.fontFamily.value;
+        if (this.win) {
+          this.win.document.$("#main").style.fontFamily = v;
+        }
+      });
+      // 前景变换
+      Reactor.effect(() => {
+        const v = this.frontTransform.value;
+        if (this.win) {
+          this.win.document.$("#main").style.transform = v;
+        }
+      });
+      // 背景变换
+      Reactor.effect(() => {
+        const v = this.backTransform.value;
+        if (this.win) {
+          this.win.document.$("#wrapper").style.transform = v;
+        }
+      });
+    }
+  }
+
+  fcEl = null;
+  bcEl = null;
+
+  handleC(e) {
+    // const color = e.target.value;
+    // const c = CSS.set`:root {
+    //   background-color: ${this.fontColor};
+    // }`;
+    if (this.fcEl) {
+      this.fcEl.style.backgroundColor = this.fColor.value;
+    }
+    if (this.bcEl) {
+      this.bcEl.style.backgroundColor = this.bColor.value;
     }
   }
 
@@ -118,9 +222,15 @@ export class Foo extends Element {
         // parent: Window.this,
         state: this.isShow ? Window.WINDOW_SHOWN : Window.WINDOW_HIDDEN,
       });
+      this.win.frameType = this.frameType.value;
       this.win.document.$("#main").classList.add(this.direction.value);
       this.win.document.$("#main").innerText = this.content.value;
       this.win.on("closerequest", () => (this.win = null));
+      // 前景变换
+      this.win.document.$("#main").style.transform = this.frontTransform.value;
+      // 背景变换
+      this.win.document.$("#wrapper").style.transform = this.backTransform.value;
+      this.win.document.$("#main").style.fontFamily = this.fontFamily.value;
     }
   }
 
@@ -170,7 +280,7 @@ export class Foo extends Element {
   render() {
     return (
       <div class="group">
-        <details>
+        <details open={this.isOpen}>
           <summary>{this.title}</summary>
           <hr></hr>
           <table>
@@ -326,18 +436,115 @@ export class Foo extends Element {
           <table>
             <tr>
               <td class="col-1">
+                <label for="frameType">窗口类型</label>
+              </td>
+              <td class="col-end" colspan="2">
+                <input
+                  type="radio"
+                  name="frameType"
+                  id="transparentFrame"
+                  value="transparent"
+                  checked={this.frameType.value === "transparent"}
+                  onchange={() => (this.frameType.value = "transparent")}
+                />
+                <label for="transparentFrame">透明</label>
+                <span>&nbsp;&nbsp;</span>
+                <input
+                  type="radio"
+                  name="frameType"
+                  id="extendedFrame"
+                  value="extended"
+                  checked={this.frameType.value === "extended"}
+                  onchange={() => (this.frameType.value = "extended")}
+                />
+                <label for="extendedFrame">无边框</label>
+                <span>&nbsp;&nbsp;</span>
+                <input
+                  type="radio"
+                  name="frameType"
+                  id="standardFrame"
+                  value="standard"
+                  checked={this.frameType.value === "standard"}
+                  onchange={() => (this.frameType.value = "standard")}
+                />
+                <label for="standardFrame">标准窗口</label>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-1">
                 <label for="fgc">前景色</label>
               </td>
+              <td class="col-2" var={this.fcEl}>
+                <span>{this.fColor}</span>
+              </td>
               <td class="col-end">
-                <input type="color" name="fgc" value="#000000" />
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  state-value={this.fColor}
+                  onchange={this.handleC.bind(this)}
+                />
               </td>
             </tr>
             <tr>
               <td class="col-1">
                 <label for="bgc">背景色</label>
               </td>
+              <td class="col-2" var={this.bcEl}>
+                <span>{this.bColor}</span>
+              </td>
               <td class="col-end">
-                <input type="color" name="bgc" value="#FFFFFF" />
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  state-value={this.bColor}
+                  onchange={this.handleC.bind(this)}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td class="col-1">
+                <label for="">字体大小</label>
+              </td>
+              <td class="col-2">
+                <input
+                  type="number"
+                  name=""
+                  min="0"
+                  max={this.Ow * 2}
+                  state-value={this.fontSize}
+                />
+              </td>
+              <td class="col-end">
+                <input
+                  type="hslider"
+                  min="0"
+                  step="1"
+                  max={this.Ow * 2}
+                  state-value={this.fontSize}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td class="col-1">
+                <label for="">字体</label>
+              </td>
+              <td class="col-end" colspan="2">
+                <input type="text" state-value={this.fontFamily} />
+              </td>
+            </tr>
+            <tr>
+              <td class="col-1">前景变换</td>
+              <td class="col-end" colspan="2">
+                <input type="text" state-value={this.frontTransform} />
+              </td>
+            </tr>
+            <tr>
+              <td class="col-1">背景变换</td>
+              <td class="col-end" colspan="2">
+                <input type="text" state-value={this.backTransform} />
               </td>
             </tr>
           </table>
@@ -355,5 +562,10 @@ export class Foo extends Element {
         </table>
       </div>
     );
+  }
+
+  componentDidMount() {
+    // Window.this.modal(<info>组件加载完成</info>);
+    this.handleC();
   }
 }

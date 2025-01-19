@@ -43,3 +43,6 @@ body {
   width: 100%;
 }
 
+.group input[type="color"] {
+  margin: 5px;
+}

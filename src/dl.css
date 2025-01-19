@@ -15,15 +15,15 @@ body {
   overflow: hidden; /* 隐藏超出的内容 */
   color: gold;
 
-  transform: rotate(45deg);
+  /* transform: rotate(45deg); */
 }
 
 #main {
   margin: 0.5*;
   background-color: red;
   font-family: 'Courier New', Courier, monospace;
-  
-  transform: rotate(135deg);
+  background-color: transparent;
+  /* transform: rotate(135deg); */
 }
 #main.horizontal {
   /* background-color: #fff; */

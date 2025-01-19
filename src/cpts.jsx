@@ -1,3 +1,4 @@
+import * as sys from "@sys";
 import { ColorInput } from "sciter:color-selector.js";
 
 class ColorTest extends ColorInput {
@@ -229,7 +230,8 @@ export class Foo extends Element {
       // 前景变换
       this.win.document.$("#main").style.transform = this.frontTransform.value;
       // 背景变换
-      this.win.document.$("#wrapper").style.transform = this.backTransform.value;
+      this.win.document.$("#wrapper").style.transform =
+        this.backTransform.value;
       this.win.document.$("#main").style.fontFamily = this.fontFamily.value;
     }
   }
@@ -274,6 +276,53 @@ export class Foo extends Element {
     // 刷新视图
     if (this.win) {
       this.win.activate();
+    }
+  }
+
+  async save() {
+    const dir = `./data/`;
+    const dataPath = `${dir}${this.title.value}.json`;
+    // 验证目录是否存在，并创建新目录
+    try {
+      // sys.fs.statSync 获取不到目录返回 null
+      // await sys.fs.stat 获取不到目录抛出错误
+      const stat = sys.fs.statSync(dir);
+      if (stat === null) {
+        await sys.fs.mkdir(dir, 0o777);
+      }
+      // Window.this.modal(<info>{stat === null}</info>);
+    } catch (e) {
+      Window.this.modal(<alert caption="目录不存在">目录不存在{e}</alert>);
+    }
+    // 创建文件
+    try {
+      const config = {
+        title: this.title.value,
+        content: this.content.value,
+        ww: this.Ww.value,
+        wh: this.Wh.value,
+        wx: this.Wx.value,
+        wy: this.Wy.value,
+        direction: this.direction.value,
+        isShow: this.isShow,
+        isOpen: this.isOpen,
+        frameType: this.frameType.value,
+        fcolor: this.fColor.value,
+        bcolor: this.bColor.value,
+        fontSize: this.fontSize.value,
+        fontFamily: this.fontFamily.value,
+        frontTransform: this.frontTransform.value,
+        backTransform: this.backTransform.value,
+      };
+      const json = JSON.stringify(config, null, 2);
+      const file = await sys.fs.open(dataPath, "w+", 0o666);
+      await file.write(json);
+      await file.close();
+      Window.this.modal(
+        <alert caption="保存成功">配置文件已保存到 {dataPath}</alert>
+      );
+    } catch (e) {
+      Window.this.modal(<alert caption="保存失败">配置保存失败{e}</alert>);
     }
   }
 
@@ -547,16 +596,24 @@ export class Foo extends Element {
                 <input type="text" state-value={this.backTransform} />
               </td>
             </tr>
+            <tr>
+              <td class="col-end right" colspan="3">
+
+              <button onclick={this.save.bind(this)}>保存</button>
+              <button onclick={this.updateWin.bind(this)}>刷新</button>
+              </td>
+            </tr>
           </table>
         </details>
         <table>
           <tr>
-            <td class="col-1"></td>
+            <td class="col-1">
+            </td>
             <td class="col-2"></td>
             <td class="col-end right">
+              <button>关闭（不保存）</button>
               <button onclick={this.hiddenWin.bind(this)}>隐藏</button>
               <button onclick={this.showWin.bind(this)}>显示</button>
-              <button onclick={this.updateWin.bind(this)}>刷新</button>
             </td>
           </tr>
         </table>

@@ -1,0 +1,18 @@
+{
+  "title": "福到了",
+  "content": "福",
+  "ww": 250,
+  "wh": 250,
+  "wx": 0,
+  "wy": 0,
+  "direction": "horizontal",
+  "isShow": true,
+  "isOpen": true,
+  "frameType": "transparent",
+  "fcolor": "gold",
+  "bcolor": "red",
+  "fontSize": 306,
+  "fontFamily": "楷体",
+  "frontTransform": "rotate(45deg) translate(-5,10)",
+  "backTransform": "rotate(135deg) scale(0.7)"
+}

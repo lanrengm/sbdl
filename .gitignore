@@ -1,6 +1,6 @@
 node_modules
 bin
 dist
+dist.zip
 
-data.json
 yarn.lock

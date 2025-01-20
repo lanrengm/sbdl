@@ -1,15 +1,18 @@
 {
   "name": "sbdl",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "config.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon -e js,jsx,html,css ./config.mjs",
-    "dev2": "./bin/win/usciter.exe",
+    "dev": "nodemon -e js,jsx,html,css ./config.mjs dev",
+    "build": "node ./config.mjs build",
     "d:usciter": "iwr -uri https://gitlab.com/sciter-engine/sciter-js-sdk/-/raw/main/bin/windows/x64/usciter.exe -outfile usciter.exe",
     "d:scapp": "curl https://gitlab.com/sciter-engine/sciter-js-sdk/-/raw/main/bin/windows/x64/scapp.exe --output scapp.exe"
   },
   "dependencies": {
     "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.3.0"
   }
 }

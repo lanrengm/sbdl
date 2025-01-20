@@ -3,7 +3,6 @@ import process from 'process';
 import child_process from 'child_process';
 
 import fse from 'fs-extra';
-
 const dev = process.argv[2] === 'dev';
 
 if (dev) {

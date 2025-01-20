@@ -563,6 +563,7 @@ export class Foo extends Element {
                   name=""
                   min="0"
                   max={this.Ow * 2}
+                  step="1"
                   state-value={this.fontSize}
                 />
               </td>

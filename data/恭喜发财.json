@@ -1,0 +1,18 @@
+{
+  "title": "恭喜发财",
+  "content": "恭喜发财",
+  "ww": 314,
+  "wh": 80,
+  "wx": 0,
+  "wy": -460,
+  "direction": "horizontal",
+  "isShow": true,
+  "isOpen": true,
+  "frameType": "transparent",
+  "fcolor": "gold",
+  "bcolor": "red",
+  "fontSize": 105,
+  "fontFamily": "楷体",
+  "frontTransform": "",
+  "backTransform": ""
+}

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon -e js,jsx,html,css ./config.mjs dev",
     "build": "node ./config.mjs build",
+    "try": "nodemon -e js,jsx,html,css ./config.mjs try",
     "d:usciter": "iwr -uri https://gitlab.com/sciter-engine/sciter-js-sdk/-/raw/main/bin/windows/x64/usciter.exe -outfile usciter.exe",
     "d:scapp": "curl https://gitlab.com/sciter-engine/sciter-js-sdk/-/raw/main/bin/windows/x64/scapp.exe --output scapp.exe"
   },

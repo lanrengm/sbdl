@@ -9,15 +9,6 @@ export class Foo extends Element {
   Ow = Reactor.signal(512);
   /** Oxy 表示屏幕中心坐标，Oh 表示屏幕高度的一半 */
   Oh = Reactor.signal(384);
-  /**
-   * Oxy 表示屏幕中心坐标，
-   *   Ow 表示屏幕宽度的一半,
-   *   Oh 表示屏幕高度的一半
-   */
-  Owh = Reactor.signal({
-    w: 512,
-    h: 384,
-  });
 
   win = null;
   /** Wxy 表示春联窗口中心的坐标，基于 Oxy 坐标进行计算 */
@@ -28,13 +19,11 @@ export class Foo extends Element {
   Ww = Reactor.signal(0);
   /** Wxy 表示春联窗口中心的坐标，基于 Oxy 坐标进行计算 */
   Wh = Reactor.signal(0);
+
+  /** Oxy 表示屏幕中心坐标， Ow 表示屏幕宽度的一半, Oh 表示屏幕高度的一半 */
+  Owh = Reactor.signal({ w: 512, h: 384 });
   /** Wxy 表示春联窗口中心的坐标，基于 Oxy 坐标进行计算 */
-  Wxywh = Reactor.signal({
-    x: 0,
-    y: 0,
-    w: 0,
-    h: 0,
-  });
+  Wxywh = Reactor.signal({ x: 0, y: 0, w: 0, h: 0 });
 
   title = Reactor.signal("");
   content = Reactor.signal("");
@@ -77,7 +66,7 @@ export class Foo extends Element {
     if (this.win) {
       // 组件刷新时执行
       this.isShow = isShow;
-      // Window.this.modal(<info>{this.isShow} {typeof this.isShow}</info>);
+      Window.this.modal(<info>{this.isShow} {typeof this.isShow}</info>);
       if (this.isShow) {
         this.showWin();
       } else {
@@ -227,7 +216,7 @@ export class Foo extends Element {
   createWin() {
     if (!this.win) {
       this.win = new Window({
-        url: "./dl.html",
+        url: "./couplet.html",
         type: Window.POPUP_WINDOW,
         caption: this.title.value,
         width: this.Ww.value * 2,
@@ -318,7 +307,7 @@ export class Foo extends Element {
         wx: this.Wx.value,
         wy: this.Wy.value,
         direction: this.direction.value,
-        isShow: this.isShow,
+        // isShow: this.isShow,
         isOpen: this.isOpen,
         frameType: this.frameType.value,
         fcolor: this.fColor.value,
@@ -344,7 +333,7 @@ export class Foo extends Element {
     return (
       <div class="group">
         <details open={this.isOpen}>
-          <summary>{this.title}</summary>
+          <summary>{this.title} {this.isShow}</summary>
           <hr></hr>
           <table>
             <tr>

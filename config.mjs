@@ -2,7 +2,9 @@
 import process from 'process';
 import child_process from 'child_process';
 
-import fse from 'fs-extra';
+import fs_extra from 'fs-extra';
+import adm_zip from 'adm-zip';
+
 const dev = process.argv[2] === 'dev';
 
 if (dev) {
@@ -22,8 +24,14 @@ if (dev) {
   });
 } else {
   // build 模式
-  await fse.copy('./assets', './dist/assets');
-  await fse.copy('./src/', './dist/');
-  await fse.copy('./data', './dist/data');
-  await fse.copy('./bin/win/scapp.exe', './dist/scapp.exe');
+  // bulid win x64
+  const win = './dist/win-x64';
+  await fs_extra.copy('./assets', `${win}/assets`);
+  await fs_extra.copy('./src/', `${win}/`);
+  await fs_extra.copy('./data', `${win}/data`);
+  await fs_extra.copy('./bin/win/scapp.exe', `${win}/scapp.exe`);
+  await fs_extra.copy('./utils/win/', `${win}/`);
+  const distZip = new adm_zip();
+  distZip.addLocalFolder(win);
+  distZip.writeZip(`./dist/win-x64.zip`);
 }

@@ -1,6 +1,8 @@
 import * as sys from "@sys";
+import { decode } from "@sciter";
 
 import { Bar } from "./cpts/Bar.jsx";
+import { Foo } from "./cpts/Foo.jsx";
 
 document.on("ready", async function () {
   try {

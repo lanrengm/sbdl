@@ -7,58 +7,37 @@ document.on("ready", function () {
 });
 
 class Root extends Element {
-  list = Reactor.signal([1, 2, 3, 4]);
+  isSHow = Reactor.signal(false);
+
+  toggleIsShow() {
+    this.isSHow.send(!this.isSHow.value);
+  }
 
   render() {
-    // const listItems = [];
-    const listItems = this.list.value.map((item, index) => (
-      <p key={index}>{item}</p>
-    ));
-    try {
-    } catch (e) {
-      Window.this.modal(<info>{e}</info>);
-    }
-
     return (
-      <div>
-        <button onclick={() => this.list.value.push(1)}>add</button>
-        <div>{listItems}</div>
-      </div>
+      <main>
+        {this.isSHow}
+        <Bar toggleIsShow={this.toggleIsShow.bind(this)} />
+        <Foo state={this.isSHow} />
+      </main>
     );
   }
 }
 
-// class Bar extends Element {
-//   list;
-//   count = Reactor.signal(0);
+class Bar extends Element {
 
-//   this({
-//     list,
-//   }) {
-//     this.list = list;
-//   }
+  render(props, kids) {
+    return (
+      <button onclick={props.toggleIsShow}>Bar Button</button>
+    );
+  }
+}
 
-//   render() {
-//     return (
-//       <button onclick={() => {this.list.push(this.count.value); this.count.value++;}}>Bar Button</button>
-//     );
-//   }
-// }
+class Foo extends Element {
 
-// class Foo extends Element {
-//   list;
-
-//   this({list}) {
-//     this.list = list;
-//   }
-
-//   render() {
-//     const listItems = this.list.map((item, index) => <p key={index}>{item}</p> );
-
-//     return (
-//       <div>Foo P
-//         <p>{listItems}</p>
-//       </div>
-//     );
-//   }
-// }
+  render(props, kids) {
+    return (
+      <div>Foo: {props.state}</div>
+    );
+  }
+}

@@ -33,10 +33,26 @@ document.on("ready", async function () {
 });
 
 class App extends Element {
+  /** 对联列表，需要 this.componentUpdate() 才能更新渲染 */
+  coupletList = [];
+  /** 是否显示对联 */
+  isShowCouplet = Reactor.signal(false);
+
+  toggleShowCouplet() {
+    this.isShowCouplet.send(!this.isShowCouplet.value);
+  }
+
+  mountCouplet() {
+    
+  }
+
   render() {
     return (
       <div id="root">
-        <Bar />
+        <Bar 
+          toggleShowCouplet={this.toggleShowCouplet.bind(this)}
+          mountCouplet={this.mountCouplet.bind(this)}
+        />
       </div>
     );
   }

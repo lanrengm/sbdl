@@ -66,8 +66,8 @@ export class Foo extends Element {
     if (this.win) {
       // 组件刷新时执行
       this.isShow = isShow;
-      Window.this.modal(<info>{this.isShow} {typeof this.isShow}</info>);
-      if (this.isShow) {
+      // Window.this.modal(<info>{String(this.isShow)} {typeof this.isShow}</info>);
+      if (this.isShow.value) {
         this.showWin();
       } else {
         this.hiddenWin();

@@ -4,8 +4,6 @@ import { decode } from "@sciter";
 import { Foo } from "./Foo.jsx";
 
 export class Bar extends Element {
-  isShow = Reactor.signal(true);
-
   selectFileEl = null;
   fileList = [];
 
@@ -20,7 +18,7 @@ export class Bar extends Element {
     }
   }
 
-  async showConfig() {
+  async showConfig(mountCouplet) {
     const fileName = this.selectFileEl.value;
     if (!fileName) {
       Window.this.modal(<error>请先挑选春联</error>);
@@ -33,38 +31,13 @@ export class Bar extends Element {
       const file = await sys.fs.open(filePath, "r", 0o666);
       const data = JSON.parse(decode(await file.read(), "utf8"));
       await file.close();
-      // Window.this.modal(
-      //   <alert caption="加载成功">配置文件 {data} 已加载</alert>
-      // );
-      // 显示春联
-      Window.this.document
-        .$("#root")
-        .append(
-          <Foo
-            title={data.title}
-            content={data.content}
-            ww={data.ww}
-            wh={data.wh}
-            wx={data.wx}
-            wy={data.wy}
-            direction={data.direction}
-            isShow={this.isShow.value}
-            isOpen={data.isOpen}
-            frameType={data.frameType}
-            fColor={data.fColor}
-            bColor={data.bColor}
-            fontSize={data.fontSize}
-            frontTransform={data.frontTransform}
-            backTransform={data.backTransform}
-            fontFamily={data.fontFamily}
-          />
-        );
+      mountCouplet(data);
     } catch (e) {
       Window.this.modal(<error>Bar.showConfig: {e}</error>);
     }
   }
 
-  render() {
+  render(props, kids) {
     return (
       <div class="group">
         <details open>
@@ -72,10 +45,10 @@ export class Bar extends Element {
           <hr />
           <table>
             <tr>
-              <td class="col-1">{this.isShow}</td>
+              <td class="col-1"></td>
               <td class="col-end right">
-                <button onclick={() => this.isShow.send(false)}>隐藏全部</button>
-                <button onclick={() => this.isShow.send(true)}>显示全部</button>
+                <button onclick={() => props.toggleShowCouplet(false)}>全部隐藏</button>
+                <button onclick={() => props.toggleShowCouplet(true)}>全部显示</button>
               </td>
             </tr>
           </table>
@@ -92,7 +65,7 @@ export class Bar extends Element {
             </tr>
             <tr>
               <td class="col-end right" colspan="3">
-                <button onclick={this.showConfig.bind(this)}>贴出来</button>
+                <button onclick={() => this.showConfig(props.mountCouplet)}>贴出来</button>
               </td>
             </tr>
           </table>

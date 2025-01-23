@@ -16,7 +16,7 @@ document.on("ready", async function () {
       // Window.this.modal(<info>trayiconclick {evt}</info>);
       if (Window.this.state === Window.WINDOW_MINIMIZED) {
         Window.this.state = Window.WINDOW_SHOWN;
-      } else if(Window.this.state === Window.WINDOW_SHOWN) {
+      } else if (Window.this.state === Window.WINDOW_SHOWN) {
         Window.this.state = Window.WINDOW_HIDDEN;
       } else {
         Window.this.state = Window.WINDOW_SHOWN;
@@ -40,21 +40,51 @@ class App extends Element {
   /** 是否显示对联 */
   isShowCouplet = Reactor.signal(false);
 
-  toggleShowCouplet() {
-    this.isShowCouplet.send(!this.isShowCouplet.value);
+  /** 
+   * 切换显示对联
+   * @param {boolean} state 显示/隐藏
+  */
+  toggleShowCouplet(state) {
+    this.isShowCouplet.send(state);
+    this.componentUpdate();
   }
 
-  mountCouplet() {
-    
+  /**
+   *
+   * @param {*} data 春联文件
+   */
+  mountCouplet(data) {
+    this.coupletList.push(
+      <Foo
+        title={data.title}
+        content={data.content}
+        ww={data.ww}
+        wh={data.wh}
+        wx={data.wx}
+        wy={data.wy}
+        direction={data.direction}
+        isShow={this.isShowCouplet}
+        isOpen={data.isOpen}
+        frameType={data.frameType}
+        fColor={data.fColor}
+        bColor={data.bColor}
+        fontSize={data.fontSize}
+        frontTransform={data.frontTransform}
+        backTransform={data.backTransform}
+        fontFamily={data.fontFamily}
+      />
+    );
+    this.componentUpdate();
   }
 
   render() {
     return (
       <div id="root">
-        <Bar 
+        <Bar
           toggleShowCouplet={this.toggleShowCouplet.bind(this)}
           mountCouplet={this.mountCouplet.bind(this)}
         />
+        {this.coupletList}
       </div>
     );
   }

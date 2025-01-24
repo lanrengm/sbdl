@@ -1,5 +1,6 @@
 import * as sys from "@sys";
 import { ColorInput } from "sciter:color-selector.js";
+import { Row1, Row2, Row3 } from "./layout.jsx";
 
 /**
  * 一个单独的春联
@@ -333,156 +334,123 @@ export class Foo extends Element {
     return (
       <div class="group">
         <details open={this.isOpen}>
-          <summary>{this.title} {this.isShow}</summary>
+          <summary>
+            {this.title} {this.isShow}
+          </summary>
           <hr></hr>
           <table>
-            <tr>
-              <td class="col-1">
-                <label for="title-text">分组标题</label>{" "}
-              </td>
-              <td class="col-end">
-                <input type="text" name="title-text" state-value={this.title} />
-              </td>
-            </tr>
-            <tr>
-              <td class="col-1">
-                <label for="top-text">内容</label>{" "}
-              </td>
-              <td class="col-end">
-                <input type="text" name="top-text" state-value={this.content} />
-              </td>
-            </tr>
-            <tr>
-              <td class="col-1">
-                <label for="direction">文字方向</label>
-              </td>
-              <td class="col-end">
-                <input
-                  type="radio"
-                  name="direction"
-                  id="horizontal"
-                  value="horizontal"
-                  checked={this.direction.value === "horizontal"}
-                  onchange={() => (this.direction.value = "horizontal")}
-                />
-                <label for="horizontal">水平方向</label>
-                <span>&nbsp;&nbsp;</span>
-                <input
-                  type="radio"
-                  name="direction"
-                  id="vertical"
-                  value="vertical"
-                  checked={this.direction.value === "vertical"}
-                  onchange={() => (this.direction.value = "vertical")}
-                />
-                <label for="vertical">垂直方向</label>
-              </td>
-            </tr>
+            <Row2>
+              <label for="title-text">分组标题</label>{" "}
+              <input type="text" name="title-text" state-value={this.title} />
+            </Row2>
+            <Row2>
+              <label for="top-text">内容</label>{" "}
+              <input type="text" name="top-text" state-value={this.content} />
+            </Row2>
+            <Row2>
+              <label for="direction">文字方向</label>
+              <input
+                type="radio"
+                name="direction"
+                id="horizontal"
+                value="horizontal"
+                checked={this.direction.value === "horizontal"}
+                onchange={() => (this.direction.value = "horizontal")}
+              />
+              <label for="horizontal">水平方向</label>
+              <span>&nbsp;&nbsp;</span>
+              <input
+                type="radio"
+                name="direction"
+                id="vertical"
+                value="vertical"
+                checked={this.direction.value === "vertical"}
+                onchange={() => (this.direction.value = "vertical")}
+              />
+              <label for="vertical">垂直方向</label>
+            </Row2>
           </table>
           <hr />
           <table>
-            <tr>
-              <td class="col-1">
-                <label for="width">宽度</label>
-              </td>
-              <td class="col-2">
-                <input
-                  name="width"
-                  type="number"
-                  min="0"
-                  max={String(this.Ow)}
-                  step="1"
-                  state-value={this.Ww}
-                />
-              </td>
-              <td class="col-end">
-                <input
-                  type="hslider"
-                  min="0"
-                  max={String(this.Ow)}
-                  step="1"
-                  state-value={this.Ww}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td class="col-1">
-                <label for="height">高度</label>
-              </td>
-              <td class="col-2">
-                <input
-                  name="height"
-                  type="number"
-                  min="0"
-                  max={String(this.Oh)}
-                  step="1"
-                  state-value={this.Wh}
-                />
-              </td>
-              <td class="col-end">
-                <input
-                  type="hslider"
-                  min="0"
-                  max={String(this.Oh)}
-                  step="1"
-                  state-value={this.Wh}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td class="col-1">
-                <label for="top-margin">横坐标</label>
-              </td>
-              <td class="col-2">
-                <input
-                  name="top-margin"
-                  type="number"
-                  min={String(-(this.Ow - this.Ww))}
-                  max={String(this.Ow - this.Ww)}
-                  value="0"
-                  step="1"
-                  state-value={this.Wx}
-                />
-              </td>
-              <td class="col-end">
-                <input
-                  type="hslider"
-                  min={String(-(this.Ow - this.Ww))}
-                  max={String(this.Ow - this.Ww)}
-                  value="0"
-                  step="1"
-                  name="top-margin"
-                  state-value={this.Wx}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td class="col-1">
-                <label for="right-margin">纵坐标</label>
-              </td>
-              <td class="col-2">
-                <input
-                  name="right-margin"
-                  type="number"
-                  min={String(-(this.Oh - this.Wh))}
-                  max={String(this.Oh - this.Wh)}
-                  value="0"
-                  step="1"
-                  state-value={this.Wy}
-                />
-              </td>
-              <td class="col-end">
-                <input
-                  type="hslider"
-                  min={String(-(this.Oh - this.Wh))}
-                  max={String(this.Oh - this.Wh)}
-                  value="0"
-                  step="1"
-                  name="top-margin"
-                  state-value={this.Wy}
-                />
-              </td>
-            </tr>
+            <Row3>
+              <label for="width">宽度</label>
+              <input
+                name="width"
+                type="number"
+                min="0"
+                max={String(this.Ow)}
+                step="1"
+                state-value={this.Ww}
+              />
+
+              <input
+                type="hslider"
+                min="0"
+                max={String(this.Ow)}
+                step="1"
+                state-value={this.Ww}
+              />
+            </Row3>
+            <Row3>
+              <label for="height">高度</label>
+              <input
+                name="height"
+                type="number"
+                min="0"
+                max={String(this.Oh)}
+                step="1"
+                state-value={this.Wh}
+              />
+              <input
+                type="hslider"
+                min="0"
+                max={String(this.Oh)}
+                step="1"
+                state-value={this.Wh}
+              />
+            </Row3>
+            <Row3>
+              <label for="top-margin">横坐标</label>
+              <input
+                name="top-margin"
+                type="number"
+                min={String(-(this.Ow - this.Ww))}
+                max={String(this.Ow - this.Ww)}
+                value="0"
+                step="1"
+                state-value={this.Wx}
+              />
+              <input
+                type="hslider"
+                min={String(-(this.Ow - this.Ww))}
+                max={String(this.Ow - this.Ww)}
+                value="0"
+                step="1"
+                name="top-margin"
+                state-value={this.Wx}
+              />
+            </Row3>
+            <Row3>
+              <label for="right-margin">纵坐标</label>
+              <input
+                name="right-margin"
+                type="number"
+                min={String(-(this.Oh - this.Wh))}
+                max={String(this.Oh - this.Wh)}
+                value="0"
+                step="1"
+                state-value={this.Wy}
+              />
+              <input
+                type="hslider"
+                min={String(-(this.Oh - this.Wh))}
+                max={String(this.Oh - this.Wh)}
+                value="0"
+                step="1"
+                name="top-margin"
+                state-value={this.Wy}
+              />
+            </Row3>
           </table>
           <hr />
           <table>

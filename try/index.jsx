@@ -7,37 +7,58 @@ document.on("ready", function () {
 });
 
 class Root extends Element {
-  isSHow = Reactor.signal(false);
-
-  toggleIsShow() {
-    this.isSHow.send(!this.isSHow.value);
-  }
-
+  v = Reactor.signal(0);
   render() {
     return (
       <main>
-        {this.isSHow}
-        <Bar toggleIsShow={this.toggleIsShow.bind(this)} />
-        <Foo state={this.isSHow} />
+        <p>{this.v}</p>
+        <LabelNumberSlider v={this.v}/>
       </main>
     );
   }
 }
+class LabelNumberSlider extends Element {
+  value = Reactor.signal(0);
+  min = Reactor.signal(0);
+  max = Reactor.signal(100);
 
-class Bar extends Element {
+  show = Reactor.signal(0);
 
-  render(props, kids) {
-    return (
-      <button onclick={props.toggleIsShow}>Bar Button</button>
-    );
+  constructor(props) {
+    Reactor.effect(() => {
+      Window.this.modal(<info>{}</info>)
+    });
   }
-}
 
-class Foo extends Element {
-
-  render(props, kids) {
+  render(props) {
     return (
-      <div>Foo: {props.state}</div>
+      <table>
+        <tr>
+          <td>
+            <lable for="number">Number: {this.show}</lable>
+          </td>
+          <td>
+            <input
+              type="number"
+              id="number"
+              step="1"
+              min={String(this.min)}
+              max={String(this.max)}
+              state-value={this.value}
+              onchange={(e) => {this.show.value = e.target.value}}
+            />
+          </td>
+          <td>
+            <input
+              type="hslider"
+              min={String(this.min)}
+              max={String(this.max)}
+              state-value={this.value}
+              onchange={(e) => {this.show.value = e.target.value}}
+            />
+          </td>
+        </tr>
+      </table>
     );
   }
 }

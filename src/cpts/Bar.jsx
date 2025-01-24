@@ -41,7 +41,7 @@ export class Bar extends Element {
     return (
       <div class="group">
         <details open>
-          <summary>张贴春联</summary>
+          <summary><span>张贴春联</span></summary>
           <hr />
           <table>
             <tr>
@@ -54,7 +54,7 @@ export class Bar extends Element {
           </table>
         </details>
         <details open>
-          <summary>库存春联</summary>
+          <summary><div>库存春联</div></summary>
           <hr />
           <table>
             <tr>

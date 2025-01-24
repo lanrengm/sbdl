@@ -14,13 +14,18 @@ body {
   word-break: break-all;
 }
 .group table {
-  margin-top: 5px;
+  /* margin-top: 5px; */
   border-collapse: collapse;
-  border: 0 solid white;
+  border: 0 solid var(--bgc);
+  /* background-color: #fff; */
+}
+.group summary {
+  margin-bottom: 5px;
+  /* background-color: #fff; */
 }
 .group td {
-  border: 5px solid var(--bgc);
-  /* border: 5px solid white; */
+  border: 0 5px solid var(--bgc);
+  border: 5px solid white;
 }
 .group .col-1 {
   width: 5rem;

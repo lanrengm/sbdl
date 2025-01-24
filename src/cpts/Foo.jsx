@@ -1,6 +1,6 @@
 import * as sys from "@sys";
 import { ColorInput } from "sciter:color-selector.js";
-import { Row1, Row2, Row3 } from "./layout.jsx";
+import { Row1, Row2, Row3, LabelNumberSlider } from "./layout.jsx";
 
 /**
  * 一个单独的春联
@@ -45,6 +45,11 @@ export class Foo extends Element {
 
   frontTransform = Reactor.signal("");
   backTransform = Reactor.signal("");
+
+  constructor(props, kids) {
+    super(props, kids);
+    // Window.this.modal(<info>Foo {this.title} 新建</info>);
+  }
 
   this({
     title = "福",
@@ -331,6 +336,7 @@ export class Foo extends Element {
   }
 
   render() {
+    // Window.this.modal(<info>Foo render</info>);
     return (
       <div class="group">
         <details open={this.isOpen}>
@@ -371,87 +377,10 @@ export class Foo extends Element {
             </Row2>
           </table>
           <hr />
-          <table>
-            <Row3>
-              <label for="width">宽度</label>
-              <input
-                name="width"
-                type="number"
-                min="0"
-                max={String(this.Ow)}
-                step="1"
-                state-value={this.Ww}
-              />
-
-              <input
-                type="hslider"
-                min="0"
-                max={String(this.Ow)}
-                step="1"
-                state-value={this.Ww}
-              />
-            </Row3>
-            <Row3>
-              <label for="height">高度</label>
-              <input
-                name="height"
-                type="number"
-                min="0"
-                max={String(this.Oh)}
-                step="1"
-                state-value={this.Wh}
-              />
-              <input
-                type="hslider"
-                min="0"
-                max={String(this.Oh)}
-                step="1"
-                state-value={this.Wh}
-              />
-            </Row3>
-            <Row3>
-              <label for="top-margin">横坐标</label>
-              <input
-                name="top-margin"
-                type="number"
-                min={String(-(this.Ow - this.Ww))}
-                max={String(this.Ow - this.Ww)}
-                value="0"
-                step="1"
-                state-value={this.Wx}
-              />
-              <input
-                type="hslider"
-                min={String(-(this.Ow - this.Ww))}
-                max={String(this.Ow - this.Ww)}
-                value="0"
-                step="1"
-                name="top-margin"
-                state-value={this.Wx}
-              />
-            </Row3>
-            <Row3>
-              <label for="right-margin">纵坐标</label>
-              <input
-                name="right-margin"
-                type="number"
-                min={String(-(this.Oh - this.Wh))}
-                max={String(this.Oh - this.Wh)}
-                value="0"
-                step="1"
-                state-value={this.Wy}
-              />
-              <input
-                type="hslider"
-                min={String(-(this.Oh - this.Wh))}
-                max={String(this.Oh - this.Wh)}
-                value="0"
-                step="1"
-                name="top-margin"
-                state-value={this.Wy}
-              />
-            </Row3>
-          </table>
+          <LabelNumberSlider label="宽度" min="0" max={String(this.Ow)} state-value={this.Ww} />
+          <LabelNumberSlider label="高度" min="0" max={String(this.Oh)} state-value={this.Wh} />
+          <LabelNumberSlider label="横坐标" min={String(-(this.Ow - this.Ww))} max={String(this.Ow - this.Ww)} state-value={this.Wx} />
+          <LabelNumberSlider label="纵坐标" min={String(-(this.Oh - this.Wh))} max={String(this.Oh - this.Wh)} state-value={this.Wy} />
           <hr />
           <table>
             <tr>

@@ -2,6 +2,7 @@ import * as sys from "@sys";
 import { decode } from "@sciter";
 
 import { Foo } from "./Foo.jsx";
+import { LabelText} from "./layout.jsx";
 
 export class Bar extends Element {
   selectFileEl = null;
@@ -41,7 +42,7 @@ export class Bar extends Element {
     return (
       <div class="group">
         <details open>
-          <summary><span>张贴春联</span></summary>
+          <summary>张贴春联</summary>
           <hr />
           <table>
             <tr>
@@ -54,7 +55,7 @@ export class Bar extends Element {
           </table>
         </details>
         <details open>
-          <summary><div>库存春联</div></summary>
+          <summary>库存春联</summary>
           <hr />
           <table>
             <tr>

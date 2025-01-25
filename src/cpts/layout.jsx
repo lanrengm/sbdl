@@ -43,9 +43,9 @@ export class Row3 extends Element {
  * @param {number} "state-value"
  */
 export class LabelNumberSlider extends Element {
-  render(props, kids) {
+  render(props) {
     return (
-      <table>
+      <table class="ctp">
         <tr>
           <td class="col-1">
             <label>{props.label}</label>
@@ -65,6 +65,31 @@ export class LabelNumberSlider extends Element {
               min={props.min ? props.min : "0"}
               max={props.max ? props.max : "100"}
               step="1"
+              state-value={props["state-value"]}
+            />
+          </td>
+        </tr>
+      </table>
+    );
+  }
+}
+
+/**
+ * LabelText
+ * @param {string} label
+ * @param {string} "state-value"
+ */
+export class LabelText extends Element {
+  render(props) {
+    return (
+      <table class="ctp">
+        <tr>
+          <td class="col-1">
+            <label>{props.label}</label>
+          </td>
+          <td class="col-end">
+            <input
+              type="text"
               state-value={props["state-value"]}
             />
           </td>

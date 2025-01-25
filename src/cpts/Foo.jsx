@@ -1,6 +1,6 @@
 import * as sys from "@sys";
 import { ColorInput } from "sciter:color-selector.js";
-import { Row1, Row2, Row3, LabelNumberSlider } from "./layout.jsx";
+import { Row1, Row2, Row3, LabelNumberSlider, LabelText } from "./layout.jsx";
 
 /**
  * 一个单独的春联
@@ -382,6 +382,10 @@ export class Foo extends Element {
           <LabelNumberSlider label="横坐标" min={String(-(this.Ow - this.Ww))} max={String(this.Ow - this.Ww)} state-value={this.Wx} />
           <LabelNumberSlider label="纵坐标" min={String(-(this.Oh - this.Wh))} max={String(this.Oh - this.Wh)} state-value={this.Wy} />
           <hr />
+          <LabelNumberSlider label="字体大小" min="0" max={String(this.Ow * 2)} state-value={this.fontSize} />
+          <LabelText label="字体" state-value={this.fontFamily} />
+          <LabelText label="前景变换" state-value={this.frontTransform} />
+          <LabelText label="背景变换" state-value={this.backTransform} />
           <table>
             <tr>
               <td class="col-1">
@@ -451,50 +455,6 @@ export class Foo extends Element {
                   state-value={this.bColor}
                   onchange={this.handleC.bind(this)}
                 />
-              </td>
-            </tr>
-            <tr>
-              <td class="col-1">
-                <label for="">字体大小</label>
-              </td>
-              <td class="col-2">
-                <input
-                  type="number"
-                  name=""
-                  min="0"
-                  max={this.Ow * 2}
-                  step="1"
-                  state-value={this.fontSize}
-                />
-              </td>
-              <td class="col-end">
-                <input
-                  type="hslider"
-                  min="0"
-                  step="1"
-                  max={this.Ow * 2}
-                  state-value={this.fontSize}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td class="col-1">
-                <label for="">字体</label>
-              </td>
-              <td class="col-end" colspan="2">
-                <input type="text" state-value={this.fontFamily} />
-              </td>
-            </tr>
-            <tr>
-              <td class="col-1">前景变换</td>
-              <td class="col-end" colspan="2">
-                <input type="text" state-value={this.frontTransform} />
-              </td>
-            </tr>
-            <tr>
-              <td class="col-1">背景变换</td>
-              <td class="col-end" colspan="2">
-                <input type="text" state-value={this.backTransform} />
               </td>
             </tr>
             <tr>

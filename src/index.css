@@ -13,6 +13,10 @@ body {
   margin: 0.5em;
   word-break: break-all;
 }
+.group details {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .group table {
   /* margin-top: 5px; */
   border-collapse: collapse;
@@ -24,8 +28,13 @@ body {
   /* background-color: #fff; */
 }
 .group td {
-  border: 0 5px solid var(--bgc);
-  border: 5px solid white;
+  border: 5px solid var(--bgc);
+}
+.group .ctp td {
+  border-left: 5px solid var(--bgc);
+  border-right: 5px solid var(--bgc);
+  border-top: 0;
+  border-bottom: 0;
 }
 .group .col-1 {
   width: 5rem;

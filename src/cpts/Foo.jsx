@@ -340,15 +340,10 @@ export class Foo extends Element {
     return (
       <div class="group">
         <details open={this.isOpen}>
-          <summary>
-            {this.title} {this.isShow}
-          </summary>
+          <summary>{this.title}</summary>
           <hr></hr>
+          <LabelText label="分组标题" state-value={this.title} />
           <table>
-            <Row2>
-              <label for="title-text">分组标题</label>{" "}
-              <input type="text" name="title-text" state-value={this.title} />
-            </Row2>
             <Row2>
               <label for="top-text">内容</label>{" "}
               <input type="text" name="top-text" state-value={this.content} />
@@ -464,6 +459,7 @@ export class Foo extends Element {
               </td>
             </tr>
           </table>
+          <hr />
         </details>
         <table>
           <tr>

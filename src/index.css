@@ -14,8 +14,8 @@ body {
   word-break: break-all;
 }
 .group details {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  /* margin-top: 10px;
+  margin-bottom: 10px; */
 }
 .group table {
   /* margin-top: 5px; */
@@ -24,7 +24,7 @@ body {
   /* background-color: #fff; */
 }
 .group summary {
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
   /* background-color: #fff; */
 }
 .group td {
